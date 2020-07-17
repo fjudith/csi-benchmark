@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: dbench
 spec:
-  storageClassName: px-storageclass
+  storageClassName: px-dedicated-sc
   # storageClassName: longhorn
   # storageClassName: edgefs-iscsi-csi-storageclass
   # storageClassName: rook-ceph-block
