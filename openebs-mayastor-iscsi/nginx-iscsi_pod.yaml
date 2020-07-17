@@ -11,7 +11,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: edgefs-nfs-csi-pvc
+  name: openeb-mayastor-iscsi-csi-pvc
 spec:
   accessModes:
   - ReadWriteOnce
@@ -35,9 +35,9 @@ spec:
       protocol: TCP
     volumeMounts:
       - mountPath: /var/lib/www/html
-        name: edgefs-nfs-csi-volume 
+        name: openeb-mayastor-iscsi-csi-volume 
   volumes:
-  - name: edgefs-nfs-csi-volume
+  - name: openeb-mayastor-iscsi-csi-volume
     persistentVolumeClaim:
-      claimName: edgefs-nfs-csi-pvc
+      claimName: openeb-mayastor-iscsi-csi-pvc
       readOnly: false
