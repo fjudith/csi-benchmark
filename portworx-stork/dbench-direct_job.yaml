@@ -1,0 +1,41 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dbench
+spec:
+  storageClassName: px-dedicated-sc
+  # storageClassName: longhorn
+  # storageClassName: edgefs-iscsi-csi-storageclass
+  # storageClassName: rook-ceph-block
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dbench
+spec:
+  template:
+    spec:
+      schedulerName: stork
+      containers:
+      - name: dbench
+        image: sotoaster/dbench:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: DBENCH_MOUNTPOINT
+            value: /data
+          - name: FIO_DIRECT
+            value: "1"
+        volumeMounts:
+        - name: dbench-pv
+          mountPath: /data
+      restartPolicy: Never
+      volumes:
+      - name: dbench-pv
+        persistentVolumeClaim:
+          claimName: dbench
+  backoffLimit: 4
